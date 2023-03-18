@@ -9,7 +9,8 @@
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+    -webkit-animation: App-logo-spin infinite 20s linear;
+            animation: App-logo-spin infinite 20s linear;
   }
 }
 
@@ -28,6 +29,15 @@
   color: #61dafb;
 }
 
+@-webkit-keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -35,4 +45,14 @@
   to {
     transform: rotate(360deg);
   }
+}
+.card-list{
+  display: flex;
+  flex-wrap: wrap;
+  align-content: space-between;
+}
+
+.card-item {
+  border: 1px solid pink;
+  width: 30%;
 }
