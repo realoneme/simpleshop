@@ -21,7 +21,7 @@ const cateReducer = (state, action) => {
         categoriesMap: payload,
       };
     default:
-      break;
+      throw new Error(`Unhandled type ${type} in cateReducer`);
   }
 };
 
