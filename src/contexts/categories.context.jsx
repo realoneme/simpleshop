@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useEffect, useReducer } from 'react';
 // import SHOP_DATA from '../shop-data.js';
 
 import { getCategoriesAndDocuments } from '../utils/firebase/firebase.utils.js';
@@ -8,8 +8,38 @@ export const CategoriesContext = createContext({
   // setproductData: () => null,
 });
 
+export const CATEGORIES_ACTION_TYPES = {
+  SET_CATEGORIES: 'SET_CATEGORIES',
+};
+
+const cateReducer = (state, action) => {
+  const { type, payload } = action;
+  switch (type) {
+    case CATEGORIES_ACTION_TYPES.SET_CATEGORIES:
+      return {
+        ...state,
+        categoriesMap: payload,
+      };
+    default:
+      break;
+  }
+};
+
+const INITIAL_STATE = {
+  categoriesMap: {},
+};
+
 export const CategoriesProvider = ({ children }) => {
-  const [categoriesMap, setCategoriesMap] = useState({});
+  // const [categoriesMap, setCategoriesMap] = useState({});
+  const [{ categoriesMap }, dispatch] = useReducer(cateReducer, INITIAL_STATE);
+
+  const setCategoriesMap = (categoryMap) => {
+    dispatch({
+      type: CATEGORIES_ACTION_TYPES.SET_CATEGORIES,
+      payload: categoryMap,
+    });
+  };
+
   const value = { categoriesMap };
 
   useEffect(() => {
