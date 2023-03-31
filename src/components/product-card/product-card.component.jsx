@@ -4,16 +4,32 @@ import {
   Footer,
   ProductCardContainer,
 } from './product-card.style.jsx';
+import { useSelector, useDispatch } from 'react-redux';
 import { Button, BUTTON_TYPES_CLASSES } from '../button/button.componente';
-import { useContext } from 'react';
-import { CartToggleContext } from '../../contexts/cart-dropdown.context';
+// import { useContext } from 'react';
+// import { CartToggleContext } from '../../contexts/cart-dropdown.context';
+import { selectedCartItems } from '../../store/cart/cart.selector';
+import { setCartItems } from '../../store/cart/cart.action';
+import {
+  addCartItem,
+  updateCartItemReducer,
+} from '../../utils/cart/cart.utils';
 
 export const ProductCard = ({ product }) => {
   const { name, price, imageUrl } = product;
-  const { addItemToCart } = useContext(CartToggleContext);
+  const cartItems = useSelector(selectedCartItems);
+  const dispatch = useDispatch();
+  // const { addItemToCart } = useContext(CartToggleContext);
+
+  const addItemToCart = (productToAdd) => {
+    const newCartItems = addCartItem(cartItems, productToAdd);
+    updateCartItemReducer(newCartItems, setCartItems, dispatch);
+  };
+
   const handleclick = () => {
     addItemToCart(product);
   };
+
   return (
     <ProductCardContainer>
       <img src={imageUrl} alt={name} />

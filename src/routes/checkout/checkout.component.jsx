@@ -4,11 +4,18 @@ import {
   HeaderBlock,
   CheckTotal,
 } from './checkout.styles';
-import { useContext } from 'react';
-import { CartToggleContext } from '../../contexts/cart-dropdown.context';
+// import { useContext } from 'react';
+import { useSelector } from 'react-redux';
+// import { CartToggleContext } from '../../contexts/cart-dropdown.context';
 import { CheckoutItem } from '../../components/checkout-item/checkout-item.component';
+import {
+  selectedCartItems,
+  selectedCartTotalPrice,
+} from '../../store/cart/cart.selector';
 const Checkout = () => {
-  const { cartItems, totalPrice } = useContext(CartToggleContext);
+  // const { cartItems, totalPrice } = useContext(CartToggleContext);
+  const cartItems = useSelector(selectedCartItems);
+  const totalPrice = useSelector(selectedCartTotalPrice);
   return (
     <CheckoutContainer>
       <CheckoutHeader>

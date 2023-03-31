@@ -1,7 +1,7 @@
-import { createContext, useEffect, useState, useReducer } from 'react';
+import { createContext, useReducer } from 'react';
+import { createAction } from '../utils/reducer/reducer.utils';
 
 const addCartItem = (cartItems, productToAdd) => {
-  console.log(cartItems);
   let ifExist = false;
   cartItems = cartItems.map((item) => {
     if (item && item.id === productToAdd.id) {
@@ -87,7 +87,7 @@ export const CartToggleProvider = ({ children }) => {
     INITIAL_STATE
   );
   const setStatus = (status) => {
-    dispatch({ type: CART_STATUS_TYPES.DISPLAY, payload: status });
+    dispatch(createAction(CART_STATUS_TYPES.DISPLAY, status));
   };
 
   // const [cartItems, setCartItems] = useState([]);
@@ -102,14 +102,13 @@ export const CartToggleProvider = ({ children }) => {
       (totalPrice, item) => totalPrice + item.price * item.quantity,
       0
     );
-    dispatch({
-      type: CART_STATUS_TYPES.EDIT_ITEM,
-      payload: {
+    dispatch(
+      createAction(CART_STATUS_TYPES.EDIT_ITEM, {
         cartItems: newCartItems,
         total: newTotal,
         totalPrice: newTotalPrice,
-      },
-    });
+      })
+    );
   };
 
   const addItemToCart = (productToAdd) => {
