@@ -1,5 +1,5 @@
 import { CategoryContainer, CategoryTitle } from './category.style';
-import { useContext, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 // import { CategoriesContext } from '../../contexts/categoriescontext';
