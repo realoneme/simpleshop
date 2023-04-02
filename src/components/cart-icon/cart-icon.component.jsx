@@ -1,6 +1,6 @@
-import { useContext } from 'react';
+// import { useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { CartToggleContext } from '../../contexts/cart-dropdown.context';
+// import { CartToggleContext } from '../../contexts/cart-dropdown.context';
 import {
   selectedCartStatus,
   selectedCartTotal,

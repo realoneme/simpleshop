@@ -4,17 +4,21 @@ import { BrowserRouter } from 'react-router-dom';
 import './index.scss';
 import App from './App';
 import { Provider } from 'react-redux';
-import { CartToggleProvider } from './contexts/cart-dropdown.context';
+// import { CartToggleProvider } from './contexts/cart-dropdown.context';
 import reportWebVitals from './reportWebVitals';
-import { store } from './store/store';
+import { store, persistor } from './store/store';
+import { PersistGate } from 'redux-persist/integration/react';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      {/* 用persistGate来包裹住所有的component，并传入持久化的store */}
+      <PersistGate persistor={persistor}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </PersistGate>
     </Provider>
   </React.StrictMode>
 );

@@ -37,20 +37,18 @@ const addItem = (cartItems, id) => {
   }));
 };
 
-const updateCartItemReducer = (newCartItems, setCartItems, dispatch) => {
-  const newTotal = newCartItems.reduce(
-    (total, item) => total + item.quantity,
-    0
-  );
-  const newTotalPrice = newCartItems.reduce(
-    (totalPrice, item) => totalPrice + item.price * item.quantity,
-    0
-  );
+const updateCartItemReducer = (
+  cartItems,
+  setCartItems,
+  total,
+  totalPrice,
+  dispatch
+) => {
   dispatch(
     setCartItems({
-      cartItems: newCartItems,
-      total: newTotal,
-      totalPrice: newTotalPrice,
+      cartItems,
+      total,
+      totalPrice,
     })
   );
 };

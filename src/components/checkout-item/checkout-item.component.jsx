@@ -17,8 +17,12 @@ import {
   removeCartItem,
   updateCartItemReducer,
 } from '../../utils/cart/cart.utils';
+import {
+  selectedCartTotal,
+  selectedCartTotalPrice,
+} from '../../store/cart/cart.selector';
 import { useContext } from 'react';
-import { CartToggleContext } from '../../contexts/cart-dropdown.context';
+// import { CartToggleContext } from '../../contexts/cart-dropdowncontext';
 
 export const CheckoutItem = ({ cartItem }) => {
   const { name, price, imageUrl, quantity, id } = cartItem;
@@ -29,15 +33,33 @@ export const CheckoutItem = ({ cartItem }) => {
   // );
   const removeItemFromCart = (removeProductId) => {
     const newCartItems = removeCartItem(cartItems, removeProductId);
-    updateCartItemReducer(newCartItems, setCartItems, dispatch);
+    updateCartItemReducer(
+      newCartItems,
+      setCartItems,
+      selectedCartTotal,
+      selectedCartTotalPrice,
+      dispatch
+    );
   };
   const removeSingleItem = (removeProductId) => {
     const newCartItems = removeItem(cartItems, removeProductId);
-    updateCartItemReducer(newCartItems, setCartItems, dispatch);
+    updateCartItemReducer(
+      newCartItems,
+      setCartItems,
+      selectedCartTotal,
+      selectedCartTotalPrice,
+      dispatch
+    );
   };
   const addSingleItem = (addProductId) => {
     const newCartItems = addItem(cartItems, addProductId);
-    updateCartItemReducer(newCartItems, setCartItems, dispatch);
+    updateCartItemReducer(
+      newCartItems,
+      setCartItems,
+      selectedCartTotal,
+      selectedCartTotalPrice,
+      dispatch
+    );
   };
   const clearItemHandler = () => removeItemFromCart(id);
   const removeItemHandler = () => removeSingleItem(id);

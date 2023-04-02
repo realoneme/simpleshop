@@ -11,6 +11,10 @@ import { Button, BUTTON_TYPES_CLASSES } from '../button/button.componente';
 import { selectedCartItems } from '../../store/cart/cart.selector';
 import { setCartItems } from '../../store/cart/cart.action';
 import {
+  selectedCartTotal,
+  selectedCartTotalPrice,
+} from '../../store/cart/cart.selector';
+import {
   addCartItem,
   updateCartItemReducer,
 } from '../../utils/cart/cart.utils';
@@ -23,7 +27,13 @@ export const ProductCard = ({ product }) => {
 
   const addItemToCart = (productToAdd) => {
     const newCartItems = addCartItem(cartItems, productToAdd);
-    updateCartItemReducer(newCartItems, setCartItems, dispatch);
+    updateCartItemReducer(
+      newCartItems,
+      setCartItems,
+      selectedCartTotal,
+      selectedCartTotalPrice,
+      dispatch
+    );
   };
 
   const handleclick = () => {

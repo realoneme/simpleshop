@@ -1,8 +1,8 @@
-import { useContext } from 'react';
+// import { useContext } from 'react';
 import { useSelector } from 'react-redux';
 import { Button } from '../button/button.componente';
 import { CartItem } from '../cart-item/cart-item.component';
-import { CartToggleContext } from '../../contexts/cart-dropdown.context';
+// import { CartToggleContext } from '../../contexts/cart-dropdown.context';
 import {
   selectedCartStatus,
   selectedCartItems,
