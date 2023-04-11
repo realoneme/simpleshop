@@ -5,7 +5,9 @@ import logger from 'redux-logger';
 import storage from 'redux-persist/lib/storage';
 
 import { rootReducer } from './root-reducer';
-import thunk from 'redux-thunk';
+// import thunk from 'redux-thunk';
+import { rootSaga } from './root-saga';
+import createSagaMiddleware from 'redux-saga';
 
 // key和storage是固定的，blacklist用来存储本地的数据
 const persistConfig = {
@@ -14,12 +16,14 @@ const persistConfig = {
   whitelist: ['cart'],
 };
 
+const sagaMiddleware = createSagaMiddleware();
 // 把persistconfig和rootreducer传入persistReducer
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const middleWares = [
   process.env.NODE_ENV !== 'production' && logger,
-  thunk,
+  // thunk,
+  sagaMiddleware,
 ].filter(Boolean);
 
 const composedEnhancer =
@@ -35,5 +39,7 @@ export const store = legacy_createStore(
   undefined,
   composedEnhancers
 );
+// saga永远是最后执行的
+sagaMiddleware.run(rootSaga);
 // 导出持久化的store
 export const persistor = persistStore(store);
