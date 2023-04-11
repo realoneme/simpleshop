@@ -39,8 +39,6 @@ function* getSnapshotFromSignedUpUserAuth(userAuth, additionalDetails) {
       userAuth,
       additionalDetails
     );
-    console.log(userSnapShot);
-    console.log(userSnapShot.data());
     yield put(signUpSuccess({ id: userSnapShot.id, ...userSnapShot.data() }));
   } catch (error) {
     yield put(signUpFailed(error));
