@@ -7,9 +7,10 @@ import { ProductCard } from '../../components/product-card/product-card.componen
 import { selectCategoriesMap } from '../../store/categories/categories.selector';
 import { selectCategoriesLoading } from '../../store/categories/categories.selector';
 import Spinner from '../../components/spinner/spinner.component';
+import { ICartItem } from 'components/cart-dropdown/cart-dropdown.component';
 
 const Category = () => {
-  const { cate } = useParams();
+  const { cate = '' } = useParams();
   const categoriesMap = useSelector(selectCategoriesMap); //useContext(CategoriesContext);
   const isLoading = useSelector(selectCategoriesLoading);
   const [products, setProducts] = useState(categoriesMap[cate]);
@@ -26,7 +27,7 @@ const Category = () => {
           <CategoryTitle>{cate.toUpperCase()}</CategoryTitle>
           <CategoryContainer>
             {products &&
-              products.map((product) => (
+              products.map((product: ICartItem) => (
                 <ProductCard product={product} key={product.id} />
               ))}
           </CategoryContainer>

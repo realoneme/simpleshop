@@ -13,6 +13,8 @@ import {
   selectedCartItems,
   selectedCartTotalPrice,
 } from '../../store/cart/cart.selector';
+import { ICartItem } from 'components/cart-dropdown/cart-dropdown.component';
+
 const Checkout = () => {
   // const { cartItems, totalPrice } = useContext(CartToggleContext);
   const cartItems = useSelector(selectedCartItems);
@@ -36,7 +38,7 @@ const Checkout = () => {
           <span>Remove</span>
         </HeaderBlock>
       </CheckoutHeader>
-      {cartItems.map((cartItem) => (
+      {cartItems.map((cartItem: ICartItem) => (
         <CheckoutItem key={cartItem.id} cartItem={cartItem} />
       ))}
       <CheckTotal>TOTAL: ${totalPrice}</CheckTotal>

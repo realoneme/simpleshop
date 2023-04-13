@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useState, ChangeEvent, FormEvent } from 'react';
 import { useDispatch } from 'react-redux';
 import { FormInput } from '../form-input/form-input.component';
 import { Button, BUTTON_TYPES_CLASSES } from '../button/button.componente';
-import {
-  signInWtihEmailPassword,
-  // signInWithGooglePopup,
-} from '../../utils/firebase/firebase.utils';
+// import {
+//   signInWtihEmailPassword,
+//   // signInWithGooglePopup,
+// } from '../../utils/firebase/firebase.utils';
 
 import {
   googleSignInStart,
@@ -23,6 +23,10 @@ const defaultFormFilds = {
   password: '',
 };
 
+export type HandleChangeEvent = (event: ChangeEvent<HTMLInputElement>) => void;
+export type HandleFormEvent = (event: FormEvent<HTMLFormElement>) => void;
+
+// | HTMLFormElement
 export const SignInForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFilds);
   const dispatch = useDispatch();
@@ -35,26 +39,28 @@ export const SignInForm = () => {
     dispatch(googleSignInStart());
   };
 
-  const handleChange = (e) => {
+  const handleChange: HandleChangeEvent = (e) => {
     const { name, value } = e.target;
     setFormFields({ ...formFields, [name]: value });
   };
-  const handleSubmit = async (e) => {
+  const handleSubmit: HandleFormEvent = async (e) => {
     e.preventDefault();
     try {
       dispatch(emailSignInStart(email, password));
       resetFormFields();
     } catch (error) {
-      switch (error.code) {
-        case 'auth/wrong-password':
-          alert('incorrect password');
-          break;
-        case 'auth/user-not-found':
-          alert('incorrect email ');
-          break;
+      if (error instanceof ReferenceError) {
+        switch (error.code as any) {
+          case 'auth/wrong-password':
+            alert('incorrect password');
+            break;
+          case 'auth/user-not-found':
+            alert('incorrect email ');
+            break;
 
-        default:
-          break;
+          default:
+            break;
+        }
       }
 
       console.error(error);

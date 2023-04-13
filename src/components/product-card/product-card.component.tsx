@@ -8,24 +8,29 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Button, BUTTON_TYPES_CLASSES } from '../button/button.componente';
 // import { useContext } from 'react';
 // import { CartToggleContext } from '../../contexts/cart-dropdown.context';
-import { selectedCartItems } from '../../store/cart/cart.selector';
-import { setCartItems } from '../../store/cart/cart.action';
+import { selectedCartItems } from '../../store/cart/cart.selector.js';
+import { setCartItems } from '../../store/cart/cart.action.js';
 import {
   selectedCartTotal,
   selectedCartTotalPrice,
-} from '../../store/cart/cart.selector';
+} from '../../store/cart/cart.selector.js';
 import {
   addCartItem,
   updateCartItemReducer,
-} from '../../utils/cart/cart.utils';
+} from '../../utils/cart/cart.utils.js';
 
-export const ProductCard = ({ product }) => {
+import { ICartItemCart } from 'components/cart-item/cart-item.component';
+interface IProductProps {
+  product: ICartItemCart;
+}
+type EditCart = (item: ICartItemCart) => void;
+export const ProductCard = ({ product }: IProductProps) => {
   const { name, price, imageUrl } = product;
   const cartItems = useSelector(selectedCartItems);
   const dispatch = useDispatch();
   // const { addItemToCart } = useContext(CartToggleContext);
 
-  const addItemToCart = (productToAdd) => {
+  const addItemToCart: EditCart = (productToAdd) => {
     const newCartItems = addCartItem(cartItems, productToAdd);
     updateCartItemReducer(
       newCartItems,

@@ -1,14 +1,21 @@
-import './category-preview.style.jsx';
+import './category-preview.style';
 import { Link } from 'react-router-dom';
 
-import { ProductCard } from '../../components/product-card/product-card.component';
+import { ProductCard } from '../product-card/product-card.component';
 import {
   CategoryPreviewContainer,
   Title,
   Preview,
 } from './category-preview.style';
 
-export const CategoryPreview = ({ products, title }) => {
+import { ICartItem } from 'components/cart-dropdown/cart-dropdown.component';
+
+interface ICategoryProps {
+  products: ICartItem[];
+  title: string;
+}
+
+export const CategoryPreview = ({ products, title }: ICategoryProps) => {
   return (
     <CategoryPreviewContainer>
       <h2>

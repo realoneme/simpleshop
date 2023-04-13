@@ -24,14 +24,18 @@ import {
 // import { useContext } from 'react';
 // import { CartToggleContext } from '../../contexts/cart-dropdowncontext';
 
-export const CheckoutItem = ({ cartItem }) => {
+import { ICartProps } from 'components/cart-item/cart-item.component';
+
+type UpdateCart = (id: number) => void;
+
+export const CheckoutItem = ({ cartItem }: ICartProps) => {
   const { name, price, imageUrl, quantity, id } = cartItem;
   const dispatch = useDispatch();
   const cartItems = useSelector(selectedCartItems);
   // const { removeItemFromCart, removeSingleItem, addSingleItem } = useContext(
   //   CartToggleContext
   // );
-  const removeItemFromCart = (removeProductId) => {
+  const removeItemFromCart: UpdateCart = (removeProductId) => {
     const newCartItems = removeCartItem(cartItems, removeProductId);
     updateCartItemReducer(
       newCartItems,
@@ -41,7 +45,7 @@ export const CheckoutItem = ({ cartItem }) => {
       dispatch
     );
   };
-  const removeSingleItem = (removeProductId) => {
+  const removeSingleItem: UpdateCart = (removeProductId: number) => {
     const newCartItems = removeItem(cartItems, removeProductId);
     updateCartItemReducer(
       newCartItems,
@@ -51,7 +55,7 @@ export const CheckoutItem = ({ cartItem }) => {
       dispatch
     );
   };
-  const addSingleItem = (addProductId) => {
+  const addSingleItem: UpdateCart = (addProductId) => {
     const newCartItems = addItem(cartItems, addProductId);
     updateCartItemReducer(
       newCartItems,

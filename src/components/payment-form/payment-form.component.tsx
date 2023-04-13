@@ -1,4 +1,6 @@
+import { useEffect, useState, ChangeEvent } from 'react';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { StripeCardElement } from '@stripe/stripe-js';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -11,9 +13,10 @@ import { BUTTON_TYPES_CLASSES } from '../button/button.componente';
 
 import { selectedCartTotalPrice } from '../../store/cart/cart.selector';
 import { selectCurrentUser } from '../../store/user/user.selector';
-import { useEffect, useState } from 'react';
 import { updateCartItemReducer } from '../../utils/cart/cart.utils';
 import { setCartItems } from '../../store/cart/cart.action';
+
+type PaymentHandler = (event: ChangeEvent<HTMLInputElement>) => Promise<void>;
 
 export const PaymentForm = () => {
   const amount = useSelector(selectedCartTotalPrice);
@@ -27,7 +30,7 @@ export const PaymentForm = () => {
   const cleanCart = () => {
     updateCartItemReducer([], setCartItems, 0, 0, dispatch);
   };
-  const paymentHandler = async (e) => {
+  const paymentHandler: PaymentHandler = async (e) => {
     e.preventDefault();
     setPaystatus(true);
     if (!stripe || !elements) return;
@@ -42,7 +45,7 @@ export const PaymentForm = () => {
     const clientSecret = response.paymentIntent.client_secret;
     const paymentResult = await stripe.confirmCardPayment(clientSecret, {
       payment_method: {
-        card: elements.getElement(CardElement),
+        card: elements.getElement(CardElement) as StripeCardElement,
         billing_details: {
           name: displayName || 'Guest',
         },
@@ -61,8 +64,8 @@ export const PaymentForm = () => {
 
   useEffect(() => {
     if (paySuccess) {
-      cleanCart();
       navigate('/shop');
+      cleanCart();
     }
   }, [paySuccess]);
 
