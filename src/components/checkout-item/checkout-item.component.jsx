@@ -21,7 +21,7 @@ import {
   selectedCartTotal,
   selectedCartTotalPrice,
 } from '../../store/cart/cart.selector';
-import { useContext } from 'react';
+// import { useContext } from 'react';
 // import { CartToggleContext } from '../../contexts/cart-dropdowncontext';
 
 export const CheckoutItem = ({ cartItem }) => {
