@@ -4,12 +4,22 @@ import {
   CategoryContainer,
 } from './category-item.style';
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, NavigateFunction } from 'react-router-dom';
 
-const CategoryItem = ({ cate }) => {
+interface Icate {
+  title: string;
+  imageUrl: string;
+}
+interface IcateProps {
+  cate: Icate;
+}
+
+type naviHandler = () => void;
+
+const CategoryItem = ({ cate }: IcateProps) => {
   const { title, imageUrl } = cate;
   const navi = useNavigate();
-  const naviHandler = () => navi(`shop/${title}`);
+  const naviHandler: naviHandler = () => navi(`shop/${title}`);
   return (
     <CategoryContainer onClick={naviHandler}>
       <BackgroundImage imageUrl={imageUrl} />

@@ -6,6 +6,10 @@ import {
   SignUpContainer,
   SignUpTitle,
 } from '../sign-in-form/sign-in-form.style';
+import {
+  HandleFormEvent,
+  HandleChangeEvent,
+} from 'components/sign-in-form/sign-in-form.component';
 
 // import {
 //   createAuthUserWithEmailAndPassword,
@@ -27,7 +31,7 @@ export const SignUpForm = () => {
   const resetFormFields = () => {
     setFormFields(defaultFormFilds);
   };
-  const handleSubmit = async (e) => {
+  const handleSubmit: HandleFormEvent = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
       alert('password do not match');
@@ -43,15 +47,17 @@ export const SignUpForm = () => {
       dispatch(signUpStart(email, password, displayName));
       resetFormFields();
     } catch (error) {
-      if (error.code === 'auth/email-already-in-use') {
-        alert('cannot create user, email already in use');
-      } else {
-        console.error('user creation encountered an error', error);
+      if (error instanceof ReferenceError) {
+        if ((error.code as any) === 'auth/email-already-in-use') {
+          alert('cannot create user, email already in use');
+        } else {
+          console.error('user creation encountered an error', error);
+        }
       }
     }
   };
 
-  const handleChange = (e) => {
+  const handleChange: HandleChangeEvent = (e) => {
     const { name, value } = e.target;
     setFormFields({ ...formFields, [name]: value });
   };

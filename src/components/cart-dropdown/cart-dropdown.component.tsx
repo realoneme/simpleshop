@@ -14,6 +14,13 @@ import {
 } from './cart-dropdown.style';
 import { Link } from 'react-router-dom';
 
+export interface ICartItem {
+  id: number;
+  name: string;
+  imageUrl: string;
+  price: number;
+}
+
 export const CartDropDown = () => {
   // const { status, cartItems } = useContext(CartToggleContext);
   const status = useSelector(selectedCartStatus);
@@ -23,7 +30,9 @@ export const CartDropDown = () => {
       <CartDropDownContainer>
         <CartItems>
           {cartItems.length ? (
-            cartItems.map((item) => <CartItem cartItem={item} key={item.id} />)
+            cartItems.map((item: ICartItem) => (
+              <CartItem cartItem={item} key={item.id} />
+            ))
           ) : (
             <NoItems>Empty cart</NoItems>
           )}
