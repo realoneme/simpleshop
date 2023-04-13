@@ -13,8 +13,12 @@ const googleSignInStart = () =>
 const emailSignInStart = (email, password) =>
   createAction(USER_ACTION_TYPES.EMAIL_SIGN_IN_START, { email, password });
 
-const signUpStart = (email, password) =>
-  createAction(USER_ACTION_TYPES.SIGN_UP_START, { email, password });
+const signUpStart = (email, password, displayName) =>
+  createAction(USER_ACTION_TYPES.SIGN_UP_START, {
+    email,
+    password,
+    displayName,
+  });
 
 const signOutStart = (user) =>
   createAction(USER_ACTION_TYPES.SIGN_OUT_START, user);
@@ -25,8 +29,8 @@ const signInSuccess = (user) =>
 const signInFailed = (error) =>
   createAction(USER_ACTION_TYPES.SIGN_IN_FAILED, error);
 
-const signUpSuccess = (user) =>
-  createAction(USER_ACTION_TYPES.SIGN_UP_SUCCESS, user);
+const signUpSuccess = (user, additionalDetails) =>
+  createAction(USER_ACTION_TYPES.SIGN_UP_SUCCESS, user, additionalDetails);
 
 const signUpFailed = (error) =>
   createAction(USER_ACTION_TYPES.SIGN_UP_FAILED, error);

@@ -33,13 +33,19 @@ function* getSnapshotFromUserAuth(userAuth, additionalDetails) {
   }
 }
 function* getSnapshotFromSignedUpUserAuth(userAuth, additionalDetails) {
+  console.log(additionalDetails);
   try {
     const userSnapShot = yield call(
       createUserDocumentFromAuth,
       userAuth,
       additionalDetails
     );
-    yield put(signUpSuccess({ id: userSnapShot.id, ...userSnapShot.data() }));
+    yield put(
+      signUpSuccess(
+        { id: userSnapShot.id, ...userSnapShot.data() },
+        additionalDetails
+      )
+    );
   } catch (error) {
     yield put(signUpFailed(error));
   }
@@ -64,15 +70,15 @@ function* signInWithEmail({ payload: { email, password } }) {
 }
 
 function* signUp({ payload }) {
-  const { email, password } = payload;
+  const { email, password, displayName } = payload;
   try {
     const { user } = yield call(
       createAuthUserWithEmailAndPassword,
       email,
       password
     );
-    yield call(getSnapshotFromSignedUpUserAuth, user);
-    yield call(getSnapshotFromUserAuth, user);
+    yield call(getSnapshotFromSignedUpUserAuth, user, { displayName });
+    yield call(getSnapshotFromUserAuth, user, { displayName });
   } catch (error) {
     yield put(signUpFailed(error));
   }

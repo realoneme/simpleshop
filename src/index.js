@@ -8,6 +8,8 @@ import { Provider } from 'react-redux';
 import reportWebVitals from './reportWebVitals';
 import { store, persistor } from './store/store';
 import { PersistGate } from 'redux-persist/integration/react';
+import { Elements } from '@stripe/react-stripe-js';
+import { stripePromise } from './utils/stripe/stripe.utils';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -16,7 +18,9 @@ root.render(
       {/* 用persistGate来包裹住所有的component，并传入持久化的store */}
       <PersistGate persistor={persistor}>
         <BrowserRouter>
-          <App />
+          <Elements stripe={stripePromise}>
+            <App />
+          </Elements>
         </BrowserRouter>
       </PersistGate>
     </Provider>

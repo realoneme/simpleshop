@@ -15,7 +15,6 @@ const persistConfig = {
   storage,
   whitelist: ['cart'],
 };
-
 const sagaMiddleware = createSagaMiddleware();
 // 把persistconfig和rootreducer传入persistReducer
 const persistedReducer = persistReducer(persistConfig, rootReducer);
